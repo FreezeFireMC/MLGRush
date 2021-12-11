@@ -1,0 +1,11 @@
+name: MLGRush
+version: '${project.version}'
+main: de.chaos.mc.server.mlgrush.MLGRush
+prefix: API
+load: STARTUP
+authors: [ Chaoshero5567 ]
+depend:
+  - ServerAPI
+
+commands:
+  setup:
