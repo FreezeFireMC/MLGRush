@@ -1,11 +1,13 @@
 name: MLGRush
 version: '${project.version}'
 main: de.chaos.mc.server.mlgrush.MLGRush
-prefix: API
-load: STARTUP
+prefix: MLGRush
 authors: [ Chaoshero5567 ]
 depend:
   - ServerAPI
 
 commands:
   setup:
+    description: Lässt dich eine Map erstellen!
+  stats:
+    description: Zeigt dir deine Statistiken für MLGRush an!

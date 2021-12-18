@@ -1,4 +1,4 @@
-package de.chaos.mc.server.mlgrush.utils.gamutils;
+package de.chaos.mc.server.mlgrush.utils.gamutils.gamestate;
 
 import de.chaos.mc.server.mlgrush.GameStatus;
 import de.chaos.mc.server.mlgrush.MLGRush;

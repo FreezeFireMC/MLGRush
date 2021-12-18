@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public enum GameState {
-    INGAME("0"),
-    ENDING("1"),
-    STOPPING("2");
+public enum GameTeam {
+    RED("TeamRed"),
+    BLUE("TeamBlue"),
+    SPECTATOR("Spectator");
 
-    @Getter private String gamestate;
+    @Getter private String gameTeam;
 }

@@ -1,10 +1,10 @@
 package de.chaos.mc.server.mlgrush.commands;
 
 import de.chaos.mc.server.mlgrush.GameStatus;
+import de.chaos.mc.server.mlgrush.MLGRush;
 import de.chaos.mc.server.mlgrush.utils.ItemBuilder;
 import de.chaos.mc.server.mlgrush.utils.Permissions;
-import de.chaos.mc.server.mlgrush.utils.config.ConfigHandler;
-import de.chaos.mc.server.mlgrush.utils.config.sqlconfigs.ArenaConfigHandler;
+import de.chaos.mc.server.mlgrush.utils.config.arenaConfig.ArenaConfigHandler;
 import de.chaos.mc.server.mlgrush.utils.megaUtils.menu.Menu;
 import de.chaos.mc.server.mlgrush.utils.megaUtils.menu.MenuFactory;
 import de.chaos.mc.server.mlgrush.utils.objects.MapObject;
@@ -15,12 +15,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
-// TODO SetupCommand für Arda
-public class setupCommand implements CommandExecutor{
+public class setupCommand implements CommandExecutor {
     private MenuFactory menuFactory;
     private GameStatus gameState;
     private String mapName;
@@ -67,12 +64,12 @@ public class setupCommand implements CommandExecutor{
                         player1.closeInventory();
                     });
                     menu.additem(3, new ItemBuilder(Material.SKULL_ITEM).name("§6BlueBed").itemStack(), player1 -> {
-                        mapObject.setBlueBed(player1.getLocation());
+                        mapObject.setBlueBed(player1.getLocation().set(player1.getLocation().getX(), player1.getLocation().getY()-1, player1.getLocation().getZ()));
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
                     menu.additem(4, new ItemBuilder(Material.SKULL_ITEM).name("§6RedBed").itemStack(), player1 -> {
-                        mapObject.setRedBed(player1.getLocation());
+                        mapObject.setRedBed(player1.getLocation().set(player1.getLocation().getX(), player1.getLocation().getY()-1, player1.getLocation().getZ()));
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
@@ -92,8 +89,9 @@ public class setupCommand implements CommandExecutor{
                     menu.additem(8, new ItemBuilder(Material.SKULL_ITEM).name("§sBestätigen").itemStack(), player1 -> {
                         player1.closeInventory();
                         config.saveMap(mapObject);
+                        MLGRush.getInstance().getConfigHandler().getMapObject = mapObject;
                         setupMaps.remove(mapObject.getMapName());
-                            player.sendMessage(DefaultMessages.normalMessage("Map wurde hinzugefügt"));
+                        player.sendMessage(DefaultMessages.normalMessage("Map wurde hinzugefügt"));
                     });
                     menu.openInventory(player);
                 } else {
