@@ -14,6 +14,5 @@ public class MapObject  {
     public Location blueSpawn;
     public Location blueBed;
     public Location spawnSpectator;
-    public Location endLocation;
     public int deathYCordinate;
 }

@@ -19,8 +19,8 @@ public class GameStateSwitcherRepository implements GameStateSwitcher {
     @Override
     public GameState switchToNextGameState() {
         switch (gameStatus.getGameState()) {
-            case ENDING:
-                switchGamestate(GameState.STOPPING);
+            case LOBBY:
+                switchGamestate(GameState.INGAME);
                 break;
             case INGAME:
                 switchGamestate(GameState.ENDING);

@@ -7,8 +7,7 @@ import lombok.Getter;
 public enum GameState {
     LOBBY("LOBBY"),
     INGAME("INGAME"),
-    ENDING("ENDING"),
-    STOPPING("STOPPING");
+    ENDING("ENDING");
 
     @Getter private String gamestate;
 }

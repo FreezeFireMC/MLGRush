@@ -1,11 +1,12 @@
 package de.chaos.mc.server.mlgrush.listener;
 
 import de.chaos.mc.server.mlgrush.MLGRush;
+import de.chaos.mc.server.mlgrush.utils.MLGRushStringLoader;
 import de.chaos.mc.server.mlgrush.utils.gamutils.GameTeam;
 import de.chaos.mc.server.mlgrush.utils.gamutils.gamestate.GameState;
 import de.chaos.mc.server.mlgrush.utils.inventorylibary.MLGRushProfileInv;
 import de.chaos.mc.server.mlgrush.utils.objects.GamePlayer;
-import de.chaos.mc.serverapi.utils.stringLibary.DefaultMessages;
+import de.chaos.mc.serverapi.utils.stringLibary.AbstractMessages;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +22,8 @@ public class ConnectionListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        event.setJoinMessage(DefaultMessages.joinMessage(player));
+        event.setJoinMessage(AbstractMessages.joinMessage(player));
+        MLGRushStringLoader.loadLanguage(player.getUniqueId());
 
         switch (MLGRush.getGameStatus().getOnlinePlayers().size()) {
             case 0:

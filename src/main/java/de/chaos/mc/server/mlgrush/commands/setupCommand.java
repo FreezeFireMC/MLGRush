@@ -8,7 +8,9 @@ import de.chaos.mc.server.mlgrush.utils.config.arenaConfig.ArenaConfigHandler;
 import de.chaos.mc.server.mlgrush.utils.megaUtils.menu.Menu;
 import de.chaos.mc.server.mlgrush.utils.megaUtils.menu.MenuFactory;
 import de.chaos.mc.server.mlgrush.utils.objects.MapObject;
-import de.chaos.mc.serverapi.utils.stringLibary.DefaultMessages;
+import de.chaos.mc.serverapi.ServerAPIBukkitMain;
+import de.chaos.mc.serverapi.utils.playerlibary.languageLibary.PlayerLanguage;
+import de.chaos.mc.serverapi.utils.stringLibary.AbstractMessages;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,6 +35,7 @@ public class setupCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            PlayerLanguage playerLanguage = ServerAPIBukkitMain.getOnlinePlayers().get(player.getUniqueId());
             if (player.hasPermission(Permissions.DEVELOPER.getPermission())) {
                 if (args.length == 1) {
                     String mapName = args[0];
@@ -46,20 +49,20 @@ public class setupCommand implements CommandExecutor {
                     }
                     Menu menu = menuFactory.createMenu(9, "§6Setup:");
                     menu.additem(0, new ItemBuilder(Material.NETHER_STAR).name("§6Spectator Spawn").itemStack(), player1 -> {
-                        mapObject.setBlueSpawn(player1.getLocation());
-                        player.sendMessage(DefaultMessages.normalMessage("SpawnLocation wurde gesetzt"));
+                        mapObject.setSpawnSpectator(player1.getLocation());
+                        player.sendMessage(AbstractMessages.normalMessage("SpawnLocation wurde gesetzt"));
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
                     menu.additem(1, new ItemBuilder(Material.SKULL_ITEM).name("§6BlueSpawn:").itemStack(), player1 -> {
                         mapObject.setBlueSpawn(player1.getLocation());
-                        player.sendMessage(DefaultMessages.normalMessage("Position-1 wurde gesetzt"));
+                        player.sendMessage(AbstractMessages.normalMessage("Position-1 wurde gesetzt"));
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
                     menu.additem(2, new ItemBuilder(Material.SKULL_ITEM).name("§6RedSpawn:").itemStack(), player1 -> {
                         mapObject.setRedSpawn(player1.getLocation());
-                        player.sendMessage(DefaultMessages.normalMessage("Position-2 wurde gesetzt"));
+                        player.sendMessage(AbstractMessages.normalMessage("Position-2 wurde gesetzt"));
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
@@ -70,11 +73,6 @@ public class setupCommand implements CommandExecutor {
                     });
                     menu.additem(4, new ItemBuilder(Material.SKULL_ITEM).name("§6RedBed").itemStack(), player1 -> {
                         mapObject.setRedBed(player1.getLocation().set(player1.getLocation().getX(), player1.getLocation().getY()-1, player1.getLocation().getZ()));
-                        setupMaps.put(mapName, mapObject);
-                        player1.closeInventory();
-                    });
-                    menu.additem(5, new ItemBuilder(Material.SKULL_ITEM).name("§6EndLocation").itemStack(), player1 -> {
-                        mapObject.setEndLocation(player1.getLocation());
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
@@ -91,17 +89,17 @@ public class setupCommand implements CommandExecutor {
                         config.saveMap(mapObject);
                         MLGRush.getInstance().getConfigHandler().getMapObject = mapObject;
                         setupMaps.remove(mapObject.getMapName());
-                        player.sendMessage(DefaultMessages.normalMessage("Map wurde hinzugefügt"));
+                        player.sendMessage(AbstractMessages.normalMessage("Map wurde hinzugefügt"));
                     });
                     menu.openInventory(player);
                 } else {
-                    player.sendMessage(DefaultMessages.wrongSyntax("/setup [MapName]"));
+                    player.sendMessage(AbstractMessages.wrongSyntax("/setup [MapName]"));
                 }
             } else {
-                player.sendMessage(DefaultMessages.NOPERMISSION);
+                player.sendMessage(playerLanguage.getNOPERMISSION());
             }
         } else {
-            sender.sendMessage(DefaultMessages.BEAPLAYER);
+            sender.sendMessage(AbstractMessages.BEAPLAYER);
         }
         return false;
     }

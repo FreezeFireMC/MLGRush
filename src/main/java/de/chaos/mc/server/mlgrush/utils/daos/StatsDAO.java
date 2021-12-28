@@ -19,6 +19,7 @@ public class StatsDAO {
     public static final String KILLS_FIELD = "KILLS";
     public static final String DEATHS_FIELD = "DEATHS";
     public static final String BED_FIELD = "BROKEN_BEDS";
+    public static final String WIN_FIELD = "WINS";
 
     @DatabaseField(id = true, columnName = UUID_FIELD)
     public UUID uuid;
@@ -31,4 +32,6 @@ public class StatsDAO {
 
     @DatabaseField(columnName = BED_FIELD)
     public long brokenBeds;
+    @DatabaseField(columnName = WIN_FIELD)
+    public long wins;
 }

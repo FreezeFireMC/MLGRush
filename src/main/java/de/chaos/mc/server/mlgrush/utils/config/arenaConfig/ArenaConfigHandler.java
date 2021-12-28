@@ -29,7 +29,6 @@ public class ArenaConfigHandler {
         arenaConfig.set("RedBed", mapObject.getRedBed());
         arenaConfig.set("RedSpawn", mapObject.getRedSpawn());
         arenaConfig.set("SpectatorSpawn", mapObject.getSpawnSpectator());
-        arenaConfig.set("EndLocation", mapObject.getEndLocation());
         arenaConfig.set("DeathYCordination", mapObject.getDeathYCordinate());
         saveArenaConfig();
     }
@@ -46,7 +45,6 @@ public class ArenaConfigHandler {
                 .redBed( arenaConfig.getSerializable("RedBed", Location.class))
                 .redSpawn(arenaConfig.getSerializable("RedSpawn", Location.class))
                 .spawnSpectator(arenaConfig.getSerializable("SpectatorSpawn", Location.class))
-                .endLocation(arenaConfig.getSerializable("EndLocation", Location.class))
                 .deathYCordinate(arenaConfig.getInt("DeathYCordination"))
                 .build();
         return mapObject;

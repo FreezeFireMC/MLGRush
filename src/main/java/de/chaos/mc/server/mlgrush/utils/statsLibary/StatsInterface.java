@@ -9,4 +9,6 @@ public interface StatsInterface {
     public long getKills(UUID uuid);
     public long getDeaths(UUID uuid);
     public long getBrokenBed(UUID uuid);
+    public void addWin(UUID uuid, long amount);
+    public long getWin(UUID uuid);
 }

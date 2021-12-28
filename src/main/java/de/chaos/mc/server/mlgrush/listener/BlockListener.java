@@ -17,7 +17,7 @@ public class BlockListener implements Listener {
         if (event.getBlock().getType() == Material.BED_BLOCK || event.getBlock().getType()== Material.BED) {
             Location bedloc = event.getBlock().getLocation();
             Player blockBreakPlayer = event.getPlayer();
-            MLGRush.getGameController().bedBreak(blockBreakPlayer, bedloc);
+            MLGRush.getGameController().bedBreak(blockBreakPlayer, bedloc, event);
             return;
         }
 
@@ -31,9 +31,7 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (event.getBlock().getType() == Material.SANDSTONE) {
             GameStatus gameStatus = MLGRush.getGameStatus();
             gameStatus.getSandStoneBlocks().add(event.getBlock());
-        }
     }
 }
