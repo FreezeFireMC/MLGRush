@@ -7,6 +7,7 @@ import de.chaos.mc.server.mlgrush.utils.gamutils.gamestate.GameState;
 import de.chaos.mc.server.mlgrush.utils.inventorylibary.MLGRushProfileInv;
 import de.chaos.mc.server.mlgrush.utils.objects.GamePlayer;
 import de.chaos.mc.serverapi.utils.stringLibary.AbstractMessages;
+import org.bukkit.WeatherType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,7 +31,6 @@ public class ConnectionListener implements Listener {
                 player.teleport(MLGRush.getGameStatus().getGameMap().getRedSpawn());
                 GamePlayer gamePlayer = GamePlayer.builder()
                         .uuid(player.getUniqueId())
-                        .points(0)
                         .gameTeam(GameTeam.RED)
                         .build();
                 MLGRush.getGameStatus().getOnlinePlayers().put(player.getUniqueId(), gamePlayer);
@@ -40,7 +40,6 @@ public class ConnectionListener implements Listener {
                 player.teleport(MLGRush.getGameStatus().getGameMap().getBlueSpawn());
                 GamePlayer gamePlayer1 = GamePlayer.builder()
                         .uuid(player.getUniqueId())
-                        .points(0)
                         .gameTeam(GameTeam.BLUE)
                         .build();
                 MLGRush.getGameStatus().getOnlinePlayers().put(player.getUniqueId(), gamePlayer1);
@@ -51,23 +50,23 @@ public class ConnectionListener implements Listener {
                 player.teleport(MLGRush.getGameStatus().getGameMap().getSpawnSpectator());
                 GamePlayer spectator = GamePlayer.builder()
                         .uuid(player.getUniqueId())
-                        .points(0)
                         .gameTeam(GameTeam.SPECTATOR)
                         .build();
                 MLGRush.getGameStatus().getSpectatorPlayers().put(player.getUniqueId(), spectator);
                 break;
-
         }
+        player.setPlayerWeather(WeatherType.CLEAR);
+        MLGRush.getInstance().getScoreboardManager().getScorebaord(player);
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        if (MLGRush.getGameStatus().getOnlinePlayers().containsKey(event.getPlayer().getUniqueId())) {
+        if (MLGRush.getGameStatus().getOnlinePlayers().containsKey(player.getUniqueId())) {
             MLGRush.getGameController().endGame();
         } else {
-            if (MLGRush.getGameStatus().getSpectatorPlayers().containsKey(event.getPlayer().getUniqueId())) {
-                MLGRush.getGameStatus().getSpectatorPlayers().remove(event.getPlayer().getUniqueId());
+            if (MLGRush.getGameStatus().getSpectatorPlayers().containsKey(player.getUniqueId())) {
+                MLGRush.getGameStatus().getSpectatorPlayers().remove(player.getUniqueId());
             }
         }
     }

@@ -17,4 +17,6 @@ public class GameStatus {
     private HashMap<UUID, GamePlayer> onlinePlayers = new HashMap<>();
     private ArrayList<Block> sandStoneBlocks = new ArrayList<>();
     private MapObject gameMap;
+    private int teambluePoints;
+    private int teamredPoints;
 }

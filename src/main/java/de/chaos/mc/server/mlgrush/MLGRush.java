@@ -16,6 +16,7 @@ import de.chaos.mc.server.mlgrush.utils.inventorylibary.MLGRushProfileInv;
 import de.chaos.mc.server.mlgrush.utils.inventorylibary.ormlite.UpdateInvSortingRepository;
 import de.chaos.mc.server.mlgrush.utils.inventorylibary.ormlite.UpdateInventorySortingInterface;
 import de.chaos.mc.server.mlgrush.utils.megaUtils.menu.MenuFactory;
+import de.chaos.mc.server.mlgrush.utils.scorebaord.ScoreboardManager;
 import de.chaos.mc.server.mlgrush.utils.statsLibary.StatsInterface;
 import de.chaos.mc.server.mlgrush.utils.statsLibary.StatsRepository;
 import de.chaos.mc.serverapi.api.ServerAPI;
@@ -47,6 +48,7 @@ public class MLGRush extends JavaPlugin {
     private MLGRushProfileInv mlgRushProfileInv;
     @Getter private static HashMap<UUID, MLGRushPlayerLanguage> onlinePlayers;
     @Getter private LanguageInterface languageInterface;
+    @Getter private ScoreboardManager scoreboardManager;
 
     @Override
     public void onEnable() {
@@ -74,6 +76,8 @@ public class MLGRush extends JavaPlugin {
         sortingInterface = new UpdateInvSortingRepository(connectionSource);
 
         mlgRushProfileInv = new MLGRushProfileInv(sortingInterface, menuFactory);
+
+        scoreboardManager = new ScoreboardManager(this, languageInterface, statsInterface);
 
         getCommand("setup").setExecutor(new setupCommand(menuFactory, gameStatus, arenaConfigHandler));
         getCommand("stats").setExecutor(new StatsCommand(statsInterface));

@@ -10,6 +10,5 @@ import java.util.UUID;
 @Builder
 public class GamePlayer {
     public UUID uuid;
-    public int points;
     public GameTeam gameTeam;
 }

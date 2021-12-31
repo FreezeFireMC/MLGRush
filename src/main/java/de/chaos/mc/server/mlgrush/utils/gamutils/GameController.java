@@ -7,11 +7,10 @@ import de.chaos.mc.server.mlgrush.utils.gamutils.gamestate.GameState;
 import de.chaos.mc.server.mlgrush.utils.gamutils.gamestate.GameStateSwitcher;
 import de.chaos.mc.server.mlgrush.utils.objects.GamePlayer;
 import de.chaos.mc.server.mlgrush.utils.statsLibary.StatsInterface;
-import de.chaos.mc.serverapi.utils.stringLibary.AbstractMessages;
-import de.dytanic.cloudnet.driver.CloudNetDriver;
-import de.dytanic.cloudnet.driver.service.ServiceTask;
-import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
-import de.dytanic.cloudnet.ext.bridge.player.executor.ServerSelectorType;
+import eu.thesimplecloud.api.CloudAPI;
+import eu.thesimplecloud.api.player.ICloudPlayer;
+import eu.thesimplecloud.api.service.ICloudService;
+import eu.thesimplecloud.api.servicegroup.ICloudServiceGroup;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,6 +18,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class GameController {
@@ -37,7 +37,7 @@ public class GameController {
         GameStatus gameStatus = MLGRush.getGameStatus();
         if (gameStatus.getGameMap().getBlueBed().distance(bedloc) <= 2) {
             if (gameStatus.getOnlinePlayers().get(blockBreakUUID).getGameTeam().equals(GameTeam.RED)) {
-                gameStatus.getOnlinePlayers().get(blockBreakUUID).setPoints(gameStatus.getOnlinePlayers().get(blockBreakUUID).getPoints() + 1);
+                gameStatus.setTeamredPoints(gameStatus.getTeamredPoints() + 1);
                 for (UUID uuid : gameStatus.getOnlinePlayers().keySet()) {
                     GamePlayer gamePlayer = gameStatus.getOnlinePlayers().get(uuid);
                     if (gamePlayer.getGameTeam().equals(GameTeam.BLUE)) {
@@ -61,7 +61,7 @@ public class GameController {
                 statsInterface.addBrokenBeads(blockBreakUUID, 1);
                 clearPlacedBlocks();
 
-                if (gameStatus.getOnlinePlayers().get(blockBreakPlayer.getUniqueId()).getPoints() == 10) {
+                if (gameStatus.getTeamredPoints() == 10) {
                     for (UUID uuid : gameStatus.getOnlinePlayers().keySet()) {
                         MLGRushPlayerLanguage gameLanguage = MLGRush.getOnlinePlayers().get(uuid);
                         Bukkit.getPlayer(uuid).sendMessage(gameLanguage.playerWon(uuid, blockBreakPlayer));
@@ -77,7 +77,7 @@ public class GameController {
 
         if (gameStatus.getGameMap().getRedBed().distance(bedloc) <= 2) {
             if (gameStatus.getOnlinePlayers().get(blockBreakUUID).getGameTeam().equals(GameTeam.BLUE)) {
-                gameStatus.getOnlinePlayers().get(blockBreakUUID).setPoints(gameStatus.getOnlinePlayers().get(blockBreakUUID).getPoints() + 1);
+                gameStatus.setTeambluePoints(gameStatus.getTeambluePoints() + 1);
                 for (UUID uuid : gameStatus.getOnlinePlayers().keySet()) {
                     GamePlayer gamePlayer = gameStatus.getOnlinePlayers().get(uuid);
                     if (gamePlayer.getGameTeam().equals(GameTeam.BLUE)) {
@@ -100,7 +100,7 @@ public class GameController {
                 this.clearPlacedBlocks();
                 event.setCancelled(true);
                 statsInterface.addBrokenBeads(blockBreakUUID, 1);
-                if (gameStatus.getOnlinePlayers().get(blockBreakPlayer.getUniqueId()).getPoints() == 10) {
+                if (gameStatus.getTeambluePoints() == 10) {
                     for (UUID uuid : gameStatus.getOnlinePlayers().keySet()) {
                         MLGRushPlayerLanguage gameLanguage = MLGRush.getOnlinePlayers().get(uuid);
                         Bukkit.getPlayer(uuid).sendMessage(gameLanguage.playerWon(uuid, blockBreakPlayer));
@@ -126,10 +126,16 @@ public class GameController {
 
     public void endGame() {
         gameStateSwitcher.switchGamestate(GameState.ENDING);
-        ServiceTask serviceTask = CloudNetDriver.getInstance().getServiceTaskProvider().getServiceTask("MLGRushHub");
+        ICloudServiceGroup serviceTask = CloudAPI.getInstance().getCloudServiceGroupManager().getServiceGroupByName("MLGRushHub");
+        ICloudService service = null;
+        do {
+            service = serviceTask.getAllServices().get(new Random().nextInt(serviceTask.getAllServices().size()));
+        } while (service == null || service.isFull());
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             assert serviceTask != null;
-            CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class).getPlayerExecutor(player.getUniqueId()).connectToTask(serviceTask.getName(), ServerSelectorType.LOWEST_PLAYERS);
+            ICloudPlayer cloudPlayer = CloudAPI.getInstance().getCloudPlayerManager().getCachedCloudPlayer(player.getUniqueId());
+            CloudAPI.getInstance().getCloudPlayerManager().connectPlayer(cloudPlayer, service);
         }
         Bukkit.getServer().shutdown();
     }

@@ -11,6 +11,7 @@ import de.chaos.mc.server.mlgrush.utils.objects.MapObject;
 import de.chaos.mc.serverapi.ServerAPIBukkitMain;
 import de.chaos.mc.serverapi.utils.playerlibary.languageLibary.PlayerLanguage;
 import de.chaos.mc.serverapi.utils.stringLibary.AbstractMessages;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -67,12 +68,16 @@ public class setupCommand implements CommandExecutor {
                         player1.closeInventory();
                     });
                     menu.additem(3, new ItemBuilder(Material.SKULL_ITEM).name("§6BlueBed").itemStack(), player1 -> {
-                        mapObject.setBlueBed(player1.getLocation().set(player1.getLocation().getX(), player1.getLocation().getY()-1, player1.getLocation().getZ()));
+                        Location location = player1.getLocation();
+                        location.setY(player1.getLocation().getY() -1);
+                        mapObject.setBlueBed(location);
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
                     menu.additem(4, new ItemBuilder(Material.SKULL_ITEM).name("§6RedBed").itemStack(), player1 -> {
-                        mapObject.setRedBed(player1.getLocation().set(player1.getLocation().getX(), player1.getLocation().getY()-1, player1.getLocation().getZ()));
+                        Location location = player1.getLocation();
+                        location.setY(player1.getLocation().getY() -1);
+                        mapObject.setRedBed(location);
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
