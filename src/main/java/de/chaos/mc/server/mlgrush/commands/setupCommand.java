@@ -55,41 +55,41 @@ public class setupCommand implements CommandExecutor {
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
-                    menu.additem(1, new ItemBuilder(Material.SKULL_ITEM).name("§6BlueSpawn:").itemStack(), player1 -> {
+                    menu.additem(1, new ItemBuilder(Material.PLAYER_HEAD).name("§6BlueSpawn:").itemStack(), player1 -> {
                         mapObject.setBlueSpawn(player1.getLocation());
                         player.sendMessage(AbstractMessages.normalMessage("Position-1 wurde gesetzt"));
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
-                    menu.additem(2, new ItemBuilder(Material.SKULL_ITEM).name("§6RedSpawn:").itemStack(), player1 -> {
+                    menu.additem(2, new ItemBuilder(Material.PLAYER_HEAD).name("§6RedSpawn:").itemStack(), player1 -> {
                         mapObject.setRedSpawn(player1.getLocation());
                         player.sendMessage(AbstractMessages.normalMessage("Position-2 wurde gesetzt"));
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
-                    menu.additem(3, new ItemBuilder(Material.SKULL_ITEM).name("§6BlueBed").itemStack(), player1 -> {
+                    menu.additem(3, new ItemBuilder(Material.PLAYER_HEAD).name("§6BlueBed").itemStack(), player1 -> {
                         Location location = player1.getLocation();
                         location.setY(player1.getLocation().getY() -1);
                         mapObject.setBlueBed(location);
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
-                    menu.additem(4, new ItemBuilder(Material.SKULL_ITEM).name("§6RedBed").itemStack(), player1 -> {
+                    menu.additem(4, new ItemBuilder(Material.PLAYER_HEAD).name("§6RedBed").itemStack(), player1 -> {
                         Location location = player1.getLocation();
                         location.setY(player1.getLocation().getY() -1);
                         mapObject.setRedBed(location);
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
-                    menu.additem(6, new ItemBuilder(Material.SKULL_ITEM).name("§6SetY").itemStack(), player1 -> {
+                    menu.additem(6, new ItemBuilder(Material.PLAYER_HEAD).name("§6SetY").itemStack(), player1 -> {
                         mapObject.setDeathYCordinate(player1.getLocation().getBlockY());
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();
                     });
-                    menu.additem(7, new ItemBuilder(Material.SKULL_ITEM).name("§cSchließen").itemStack(), player1 -> {
+                    menu.additem(7, new ItemBuilder(Material.PLAYER_HEAD).name("§cSchließen").itemStack(), player1 -> {
                         setupMaps.put(mapName, mapObject);
                         player1.closeInventory();});
-                    menu.additem(8, new ItemBuilder(Material.SKULL_ITEM).name("§sBestätigen").itemStack(), player1 -> {
+                    menu.additem(8, new ItemBuilder(Material.PLAYER_HEAD).name("§sBestätigen").itemStack(), player1 -> {
                         player1.closeInventory();
                         config.saveMap(mapObject);
                         MLGRush.getInstance().getConfigHandler().getMapObject = mapObject;

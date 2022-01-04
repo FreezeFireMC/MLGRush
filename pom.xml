@@ -68,22 +68,17 @@
     </repositories>
 
     <dependencies>
-    <dependency>
-        <groupId>com.destroystokyo.paper</groupId>
-        <artifactId>paper-api</artifactId>
-        <version>1.12.2-R0.1-SNAPSHOT</version>
-        <scope>provided</scope>
-    </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/caosk/Desktop/ServerAPI/spigot.jar</systemPath>
+        </dependency>
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-engine</artifactId>
         <version>5.0.2</version>
-    </dependency>
-    <dependency>
-        <groupId>com.j256.ormlite</groupId>
-        <artifactId>ormlite-jdbc</artifactId>
-        <version>5.3</version>
-        <scope>compile</scope>
     </dependency>
     <dependency>
         <groupId>mysql</groupId>
@@ -102,11 +97,6 @@
         <version>1.1.1</version>
     </dependency>
     <dependency>
-        <groupId>com.j256.ormlite</groupId>
-        <artifactId>ormlite-core</artifactId>
-        <version>5.3</version>
-    </dependency>
-    <dependency>
         <groupId>eu.thesimplecloud.simplecloud</groupId>
         <artifactId>simplecloud-api</artifactId>
         <version>2.3.0</version>
@@ -119,5 +109,12 @@
         <version>2.3.0</version>
         <scope>provided</scope>
     </dependency>
+        <dependency>
+            <groupId>de.chaos.mc</groupId>
+            <artifactId>ServerAPI</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/caosk/Desktop/ServerAPI/ServerAPI-1.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

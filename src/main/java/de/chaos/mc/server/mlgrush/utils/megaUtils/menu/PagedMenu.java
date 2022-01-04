@@ -59,7 +59,7 @@ public class PagedMenu extends Menu
 			if (item != null) super.additem(item);
 		}
 		for (int i = effectiveSize; i < effectiveSize + 9; i++)
-			super.additem(i, itemStackFactory.createItemStack(Material.STAINED_GLASS_PANE, " ", 1, 7), null);
+			super.additem(i, itemStackFactory.createItemStack(Material.GLASS_PANE, " ", 1, 7), null);
 
 		// super.additem(i, this.createItem(Material.STAINED_GLASS, " ", 1, 7), null);
 

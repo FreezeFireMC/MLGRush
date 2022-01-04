@@ -3,6 +3,7 @@ version: '${project.version}'
 main: de.chaos.mc.server.mlgrush.MLGRush
 prefix: MLGRush
 authors: [ Chaoshero5567 ]
+api-version: 1.17
 depend:
   - ServerAPI
 

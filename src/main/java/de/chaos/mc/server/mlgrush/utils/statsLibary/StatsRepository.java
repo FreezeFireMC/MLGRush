@@ -20,18 +20,19 @@ public class StatsRepository implements StatsInterface {
     public void addKills(UUID uuid, long amount) {
         StatsDAO statsDAO = null;
         try {
-            if (!(getKills(uuid) == 0)) {
-                statsDAO.setKills(getKills(uuid) + amount);
+            statsDAO = daoManager.getDAO().queryForId(uuid);
+            if (statsDAO != null) {
+                statsDAO.setKills(statsDAO.getKills() + amount);
             } else {
                 statsDAO = StatsDAO.builder()
                         .uuid(uuid)
-                        .kills(amount)
-                        .deaths(0)
-                        .brokenBeds(0)
                         .wins(0)
+                        .brokenBeds(0)
+                        .deaths(0)
+                        .kills(amount)
                         .build();
-                daoManager.getDAO().createOrUpdate(statsDAO);
             }
+            daoManager.getDAO().createOrUpdate(statsDAO);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -41,18 +42,19 @@ public class StatsRepository implements StatsInterface {
     public void addDeaths(UUID uuid, long amount) {
         StatsDAO statsDAO = null;
         try {
-            if (!(getDeaths(uuid) == 0)) {
-                statsDAO.setDeaths(getDeaths(uuid) + amount);
+            statsDAO = daoManager.getDAO().queryForId(uuid);
+            if (statsDAO != null) {
+                statsDAO.setDeaths(statsDAO.getKills() + amount);
             } else {
                 statsDAO = StatsDAO.builder()
                         .uuid(uuid)
-                        .kills(0)
-                        .deaths(amount)
-                        .brokenBeds(0)
                         .wins(0)
+                        .brokenBeds(0)
+                        .deaths(amount)
+                        .kills(0)
                         .build();
-                daoManager.getDAO().createOrUpdate(statsDAO);
             }
+            daoManager.getDAO().createOrUpdate(statsDAO);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -62,18 +64,19 @@ public class StatsRepository implements StatsInterface {
     public void addBrokenBeads(UUID uuid, long amount) {
         StatsDAO statsDAO = null;
         try {
-            if (!(getDeaths(uuid) == 0)) {
-                statsDAO.setBrokenBeds(getDeaths(uuid) + amount);
+            statsDAO = daoManager.getDAO().queryForId(uuid);
+            if (statsDAO != null) {
+                statsDAO.setBrokenBeds(statsDAO.getKills() + amount);
             } else {
                 statsDAO = StatsDAO.builder()
                         .uuid(uuid)
-                        .kills(0)
-                        .deaths(0)
-                        .brokenBeds(amount)
                         .wins(0)
+                        .brokenBeds(amount)
+                        .deaths(0)
+                        .kills(0)
                         .build();
-                daoManager.getDAO().createOrUpdate(statsDAO);
             }
+            daoManager.getDAO().createOrUpdate(statsDAO);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -131,18 +134,19 @@ public class StatsRepository implements StatsInterface {
     public void addWin(UUID uuid, long amount) {
         StatsDAO statsDAO = null;
         try {
-            if (!(getDeaths(uuid) == 0)) {
-                statsDAO.setDeaths(getKills(uuid) + amount);
+            statsDAO = daoManager.getDAO().queryForId(uuid);
+            if (statsDAO != null) {
+                statsDAO.setWins(statsDAO.getKills() + amount);
             } else {
                 statsDAO = StatsDAO.builder()
                         .uuid(uuid)
-                        .kills(0)
-                        .deaths(0)
-                        .brokenBeds(0)
                         .wins(amount)
+                        .brokenBeds(0)
+                        .deaths(0)
+                        .kills(0)
                         .build();
-                daoManager.getDAO().createOrUpdate(statsDAO);
             }
+            daoManager.getDAO().createOrUpdate(statsDAO);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

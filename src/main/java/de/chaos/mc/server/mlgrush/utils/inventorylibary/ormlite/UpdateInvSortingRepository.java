@@ -62,9 +62,9 @@ public class UpdateInvSortingRepository implements UpdateInventorySortingInterfa
 
     @Override
     public void updateSorting(Player player, Inventory inventory) {
-        int sword = 5;
-        int sandstone = 5;
-        int pickaxe = 5;
+        int sword = 0;
+        int sandstone = 1;
+        int pickaxe = 2;
 
         if (inventory.getItem(0) != null) {
             if (inventory.getItem(0).getType().equals(Material.STICK)) {
