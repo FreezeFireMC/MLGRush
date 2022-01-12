@@ -18,11 +18,12 @@ public class StatsRepository implements StatsInterface {
 
     @Override
     public void addKills(UUID uuid, long amount) {
-        StatsDAO statsDAO = null;
+        StatsDAO statsDAO;
         try {
             statsDAO = daoManager.getDAO().queryForId(uuid);
             if (statsDAO != null) {
-                statsDAO.setKills(statsDAO.getKills() + amount);
+                statsDAO.setKills(Math.addExact(statsDAO.getKills(), amount));
+                daoManager.getDAO().createOrUpdate(statsDAO);
             } else {
                 statsDAO = StatsDAO.builder()
                         .uuid(uuid)
@@ -44,7 +45,8 @@ public class StatsRepository implements StatsInterface {
         try {
             statsDAO = daoManager.getDAO().queryForId(uuid);
             if (statsDAO != null) {
-                statsDAO.setDeaths(statsDAO.getKills() + amount);
+                statsDAO.setDeaths(Math.addExact(statsDAO.getDeaths(), amount));
+                daoManager.getDAO().createOrUpdate(statsDAO);
             } else {
                 statsDAO = StatsDAO.builder()
                         .uuid(uuid)
@@ -66,7 +68,8 @@ public class StatsRepository implements StatsInterface {
         try {
             statsDAO = daoManager.getDAO().queryForId(uuid);
             if (statsDAO != null) {
-                statsDAO.setBrokenBeds(statsDAO.getKills() + amount);
+                statsDAO.setBrokenBeds(Math.addExact(statsDAO.getBrokenBeds(), amount));
+                daoManager.getDAO().createOrUpdate(statsDAO);
             } else {
                 statsDAO = StatsDAO.builder()
                         .uuid(uuid)
@@ -136,7 +139,8 @@ public class StatsRepository implements StatsInterface {
         try {
             statsDAO = daoManager.getDAO().queryForId(uuid);
             if (statsDAO != null) {
-                statsDAO.setWins(statsDAO.getKills() + amount);
+                statsDAO.setWins(Math.addExact(statsDAO.getWins(), amount));
+                daoManager.getDAO().createOrUpdate(statsDAO);
             } else {
                 statsDAO = StatsDAO.builder()
                         .uuid(uuid)

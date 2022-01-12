@@ -38,6 +38,7 @@ public class GameController {
         if (gameStatus.getGameMap().getBlueBed().distance(bedloc) <= 2) {
             if (gameStatus.getOnlinePlayers().get(blockBreakUUID).getGameTeam().equals(GameTeam.RED)) {
                 gameStatus.setTeamredPoints(gameStatus.getTeamredPoints() + 1);
+                statsInterface.addBrokenBeads(blockBreakUUID, 1);
                 for (UUID uuid : gameStatus.getOnlinePlayers().keySet()) {
                     GamePlayer gamePlayer = gameStatus.getOnlinePlayers().get(uuid);
                     if (gamePlayer.getGameTeam().equals(GameTeam.BLUE)) {
@@ -58,7 +59,6 @@ public class GameController {
                     }
                 }
                 event.setCancelled(true);
-                statsInterface.addBrokenBeads(blockBreakUUID, 1);
                 clearPlacedBlocks();
 
                 if (gameStatus.getTeamredPoints() == 10) {
@@ -78,6 +78,7 @@ public class GameController {
         if (gameStatus.getGameMap().getRedBed().distance(bedloc) <= 2) {
             if (gameStatus.getOnlinePlayers().get(blockBreakUUID).getGameTeam().equals(GameTeam.BLUE)) {
                 gameStatus.setTeambluePoints(gameStatus.getTeambluePoints() + 1);
+                statsInterface.addBrokenBeads(blockBreakUUID, 1);
                 for (UUID uuid : gameStatus.getOnlinePlayers().keySet()) {
                     GamePlayer gamePlayer = gameStatus.getOnlinePlayers().get(uuid);
                     if (gamePlayer.getGameTeam().equals(GameTeam.BLUE)) {
@@ -99,7 +100,6 @@ public class GameController {
                 }
                 this.clearPlacedBlocks();
                 event.setCancelled(true);
-                statsInterface.addBrokenBeads(blockBreakUUID, 1);
                 if (gameStatus.getTeambluePoints() == 10) {
                     for (UUID uuid : gameStatus.getOnlinePlayers().keySet()) {
                         MLGRushPlayerLanguage gameLanguage = MLGRush.getOnlinePlayers().get(uuid);

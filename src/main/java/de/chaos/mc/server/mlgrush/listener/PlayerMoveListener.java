@@ -26,7 +26,8 @@ public class PlayerMoveListener implements Listener {
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         GameStatus status = MLGRush.getGameStatus();
-        if (player.getLocation().getY() <= MLGRush.getGameStatus().getGameMap().getDeathYCordinate()) {
+        int location = (int) player.getLocation().getY();
+        if (location <= MLGRush.getGameStatus().getGameMap().getDeathYCordinate()) {
             UUID uuid = player.getUniqueId();
             Player killer = null;
 
@@ -39,16 +40,16 @@ public class PlayerMoveListener implements Listener {
             killer.sendMessage(AbstractMessages.normalMessage("Du hast " + player.getName() + " getötet!"));
             killer.playSound(killer.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
 
-
+            statsInterface.addKills(killer.getUniqueId(), 1);
+            statsInterface.addDeaths(player.getUniqueId(), 1);
             if (status.getOnlinePlayers().get(event.getPlayer().getUniqueId()).getGameTeam().equals(GameTeam.RED)) {
                 player.teleport(MLGRush.getGameStatus().getGameMap().getRedSpawn());
-                statsInterface.addDeaths(killer.getUniqueId(), 1);
+                MLGRush.getInstance().getMlgRushProfileInv().setInventory(player);
             } else {
                 player.teleport(MLGRush.getGameStatus().getGameMap().getBlueSpawn());
-                statsInterface.addKills(killer.getUniqueId(), 1);
+                MLGRush.getInstance().getMlgRushProfileInv().setInventory(player);
             }
             profileInv.setInventory(event.getPlayer());
-            statsInterface.addDeaths(player.getUniqueId(), 1);
         }
     }
 }

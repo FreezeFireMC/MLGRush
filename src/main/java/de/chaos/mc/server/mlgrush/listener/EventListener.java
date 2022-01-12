@@ -22,11 +22,6 @@ public class EventListener implements Listener {
         }
     }
     @EventHandler
-    public void onPlayerDamage(EntityDamageEvent event) {
-        event.setDamage(0);
-        event.setCancelled(true);
-    }
-    @EventHandler
     public void onMeltEvent(BlockPhysicsEvent event) {
         if(event.getBlock().getType() == Material.SNOW_BLOCK && event.getBlock().getType() == Material.WATER){
             event.setCancelled(true);

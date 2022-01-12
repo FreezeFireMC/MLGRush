@@ -45,7 +45,7 @@ public class MLGRush extends JavaPlugin {
     private ArenaConfigHandler arenaConfigHandler;
     private GeneralConfig generalConfig;
     private UpdateInventorySortingInterface sortingInterface;
-    private MLGRushProfileInv mlgRushProfileInv;
+    @Getter private MLGRushProfileInv mlgRushProfileInv;
     @Getter private static HashMap<UUID, MLGRushPlayerLanguage> onlinePlayers;
     @Getter private LanguageInterface languageInterface;
     @Getter private ScoreboardManager scoreboardManager;
