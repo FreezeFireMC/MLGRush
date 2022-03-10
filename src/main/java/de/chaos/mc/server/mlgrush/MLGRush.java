@@ -21,12 +21,19 @@ import de.chaos.mc.server.mlgrush.utils.statsLibary.StatsInterface;
 import de.chaos.mc.server.mlgrush.utils.statsLibary.StatsRepository;
 import de.chaos.mc.serverapi.api.ServerAPI;
 import de.chaos.mc.serverapi.utils.playerlibary.languageLibary.LanguageInterface;
+import eu.thesimplecloud.api.CloudAPI;
+import eu.thesimplecloud.api.player.ICloudPlayer;
+import eu.thesimplecloud.api.service.ICloudService;
+import eu.thesimplecloud.api.servicegroup.ICloudServiceGroup;
+import eu.thesimplecloud.plugin.startup.CloudPlugin;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.UUID;
 
 public class MLGRush extends JavaPlugin {
@@ -88,6 +95,7 @@ public class MLGRush extends JavaPlugin {
         pluginManager.registerEvents(new BlockListener(), this);
         pluginManager.registerEvents(new PlayerDamageEvent(), this);
         pluginManager.registerEvents(new PlayerMoveListener(statsInterface, mlgRushProfileInv), this);
+        pluginManager.registerEvents(new CommandListener(), this);
         pluginManager.registerEvents(new EventListener(), this);
     }
 
@@ -101,5 +109,18 @@ public class MLGRush extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        ICloudService cloudService = CloudPlugin.getInstance().thisService();
+
+        ICloudServiceGroup serviceTask = CloudAPI.getInstance().getCloudServiceGroupManager().getServiceGroupByName("MLGRushHub");
+        ICloudService service = null;
+        do {
+            service = serviceTask.getAllServices().get(new Random().nextInt(serviceTask.getAllServices().size()));
+        } while (service == null || service.isFull());
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            assert serviceTask != null;
+            ICloudPlayer cloudPlayer = CloudAPI.getInstance().getCloudPlayerManager().getCachedCloudPlayer(player.getUniqueId());
+            CloudAPI.getInstance().getCloudPlayerManager().connectPlayer(cloudPlayer, service);
+        }
     }
 }

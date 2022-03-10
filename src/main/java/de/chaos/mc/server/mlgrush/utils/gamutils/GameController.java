@@ -10,7 +10,9 @@ import de.chaos.mc.server.mlgrush.utils.statsLibary.StatsInterface;
 import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.player.ICloudPlayer;
 import eu.thesimplecloud.api.service.ICloudService;
+import eu.thesimplecloud.api.service.ServiceState;
 import eu.thesimplecloud.api.servicegroup.ICloudServiceGroup;
+import eu.thesimplecloud.plugin.startup.CloudPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -126,6 +128,8 @@ public class GameController {
 
     public void endGame() {
         gameStateSwitcher.switchGamestate(GameState.ENDING);
+        ICloudService cloudService = CloudPlugin.getInstance().thisService();
+
         ICloudServiceGroup serviceTask = CloudAPI.getInstance().getCloudServiceGroupManager().getServiceGroupByName("MLGRushHub");
         ICloudService service = null;
         do {

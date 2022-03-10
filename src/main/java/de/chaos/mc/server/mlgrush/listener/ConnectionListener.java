@@ -7,6 +7,9 @@ import de.chaos.mc.server.mlgrush.utils.gamutils.gamestate.GameState;
 import de.chaos.mc.server.mlgrush.utils.inventorylibary.MLGRushProfileInv;
 import de.chaos.mc.server.mlgrush.utils.objects.GamePlayer;
 import de.chaos.mc.serverapi.utils.stringLibary.AbstractMessages;
+import eu.thesimplecloud.api.service.ServiceState;
+import eu.thesimplecloud.plugin.startup.CloudPlugin;
+import org.bukkit.GameMode;
 import org.bukkit.WeatherType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,6 +38,7 @@ public class ConnectionListener implements Listener {
                         .build();
                 MLGRush.getGameStatus().getOnlinePlayers().put(player.getUniqueId(), gamePlayer);
                 mlgRushProfileInv.setInventory(player);
+                CloudPlugin.getInstance().thisService().setState(ServiceState.INVISIBLE);
                 break;
             case 1:
                 player.teleport(MLGRush.getGameStatus().getGameMap().getBlueSpawn());
@@ -45,9 +49,11 @@ public class ConnectionListener implements Listener {
                 MLGRush.getGameStatus().getOnlinePlayers().put(player.getUniqueId(), gamePlayer1);
                 mlgRushProfileInv.setInventory(player);
                 MLGRush.getGameStateSwitcher().switchGamestate(GameState.INGAME);
+                CloudPlugin.getInstance().thisService().setState(ServiceState.INVISIBLE);
                 break;
             default:
                 player.teleport(MLGRush.getGameStatus().getGameMap().getSpawnSpectator());
+                player.setGameMode(GameMode.SPECTATOR);
                 GamePlayer spectator = GamePlayer.builder()
                         .uuid(player.getUniqueId())
                         .gameTeam(GameTeam.SPECTATOR)

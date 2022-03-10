@@ -4,6 +4,7 @@ import de.chaos.mc.server.mlgrush.GameStatus;
 import de.chaos.mc.server.mlgrush.MLGRush;
 import de.chaos.mc.server.mlgrush.utils.scorebaord.PlayerScorebaord;
 import de.chaos.mc.server.mlgrush.utils.statsLibary.StatsInterface;
+import de.chaos.mc.serverapi.ServerAPIBukkitMain;
 import de.chaos.mc.serverapi.utils.playerlibary.languageLibary.LanguageType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,7 +34,7 @@ public class GermanScoreboard {
                     PlayerScorebaord playerScorebaord = playerScorebaordHashMap.get(uuid);
                     if (playerScorebaord.getLanguageType() == LanguageType.DE) {
                         GameStatus gameStatus = MLGRush.getGameStatus();
-                        Objective objective = playerScorebaord.getScoreboard().getObjective("Lobby");
+                        Objective objective = playerScorebaord.getObjective();
                         playerScorebaord.getPointsRed().setSuffix("§b" + gameStatus.getTeamredPoints());
                         playerScorebaord.getPointsRed().addEntry(ChatColor.AQUA.toString());
                         playerScorebaord.getPointsBlue().setSuffix("§b" + gameStatus.getTeambluePoints());
@@ -50,8 +51,11 @@ public class GermanScoreboard {
 
     public Scoreboard getScorebaord(Player player) {
         GameStatus gameStatus = MLGRush.getGameStatus();
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("Lobby", "2");
+        Scoreboard scoreboard = ServerAPIBukkitMain.getPlayerBoards().get(player.getUniqueId());
+        if (scoreboard.getObjective("Game") != null) {
+            scoreboard.getObjective("Game").unregister();
+        }
+        Objective objective = scoreboard.registerNewObjective("Game", "2");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName("  §bFreeze§cFire  ");
         if (scoreboard.getTeam(player.getName() + ".1") != null) {
