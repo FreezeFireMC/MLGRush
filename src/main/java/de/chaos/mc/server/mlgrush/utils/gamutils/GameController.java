@@ -56,6 +56,7 @@ public class GameController {
                         for (UUID uuid1 : gameStatus.getOnlinePlayers().keySet()) {
                             if (gameStatus.getOnlinePlayers().get(uuid1).getGameTeam().equals(GameTeam.BLUE)) {
                                 Bukkit.getPlayer(uuid1).teleport(gameStatus.getGameMap().getBlueSpawn());
+                                MLGRush.getInstance().getMlgRushProfileInv().setInventory(Bukkit.getPlayer(uuid1));
                             }
                         }
                     }
@@ -88,6 +89,8 @@ public class GameController {
                         for (UUID uuid1 : gameStatus.getOnlinePlayers().keySet()) {
                             if (gameStatus.getOnlinePlayers().get(uuid1).getGameTeam().equals(GameTeam.RED)) {
                                 Bukkit.getPlayer(uuid1).teleport(gameStatus.getGameMap().getRedSpawn());
+                                MLGRush.getInstance().getMlgRushProfileInv().setInventory(Bukkit.getPlayer(uuid1));
+
                             }
                         }
                     }
